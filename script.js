@@ -21,7 +21,8 @@ $("#go").on("click", function (event) {
             url: UVAPI,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
+            console.log(response[0].value);
+            var UV = response[0].value;
         }
         )}
 
