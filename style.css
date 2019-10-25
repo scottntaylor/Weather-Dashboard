@@ -1,0 +1,22 @@
+#searchcity{
+    width: 40%;
+
+}
+#container{
+    height:100%;
+}
+
+#Header{
+    text-align: center;
+    height: 30px;
+    background-color: grey;
+    color: whitesmoke;
+}
+ #textarea{
+     height: 38px;
+ }
+
+ #search{
+     /* padding: 0px; */
+     height: 38px;
+ }
