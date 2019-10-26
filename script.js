@@ -13,6 +13,7 @@ $("#go").on("click", function (event) {
     var city = $("#search").val();
     console.log(city);
     getWeather(city);
+    addCity(city);
 });
 
 
@@ -71,11 +72,12 @@ function getFiveDay(city) {
     }).then(function (response) {
         console.log(response);
 
+for (var i = 0; i <5; i++){        
         var fiveDayData = {
-            date: response.list[3].dt_text,
-            temp: response.list[3].main.temp,
-            humidity: response.list[3].main.humidity,
-
+            date: response.list[i].dt_text,
+            temp: response.list[i].main.temp,
+            humidity: response.list[i].main.humidity,
+        }
         }
         console.log(fiveDayData);
         displayFiveDay(fiveDayData, city);
@@ -100,7 +102,7 @@ function displayWeatherData(weather, cityName) {
     $("#temp").text("Temperature: " + weather.temp + " F");
     $("#humidity").text("Humidity: " + weather.humidity + "%");
     $("#wind").text("Wind: " + weather.wind + " MPH");
-    // $("#UV").text(UV);
+    
 
 }
 function displayUV(UV) {
@@ -113,8 +115,6 @@ function displayFiveDay(fiveDayData) {
     $("#fivetemp").text(fiveDayData.temp);
     $("#fivehumidity").text(fiveDayData.humidity);
 }
-// function addCity(response) {
-//     $("#cities").append("<div>" + city + "<div>");
-
-// }
-// addCity();
+ function addCity(city) {
+    $("<button>" + city + "</button>").appendTo('#cities');
+ }
