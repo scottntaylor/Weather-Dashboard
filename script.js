@@ -10,10 +10,13 @@ const proxy = "https://cors-anywhere.herokuapp.com/"
 
 $("#go").on("click", function (event) {
     event.preventDefault();
+    $("#appendHere").empty();
     var city = $("#search").val();
     console.log(city);
     getWeather(city);
     addCity(city);
+    saveToStorage(city);
+
 });
 
 
@@ -30,6 +33,7 @@ function getWeather(city) {
         var weather = {
             cityName: response.name,
             date: moment(new Date()).format("MM/DD/YYYY"),
+            icon: response.weather[0].icon,
             temp: response.main.temp,
             humidity: response.main.humidity,
             wind: response.wind.speed
@@ -73,33 +77,30 @@ function getFiveDay(city) {
         console.log(response);
 
 
-        for (var i = 0; i < 5; i++) {
+        for (var i = 4; i < 37; i+=8) {
+
             var fiveDayData = {
-                date: response.list[i].dt_text,
+                date: response.list[i].dt_txt,
                 temp: response.list[i].main.temp,
                 humidity: response.list[i].main.humidity,
             }
+
+            console.log(fiveDayData);
+            displayFiveDay(fiveDayData, city);
         }
-        console.log(fiveDayData);
-        displayFiveDay(fiveDayData, city);
+
     })
 
 }
 
 
-//On Click Function
-// function searchCity(response) {
-
-// //     //Grap city from API
-// // }
-// searchCity();
-
 function displayWeatherData(weather, cityName) {
     // Pull data from API
+    console.log(weather);
     $("#cityndate").text(weather.cityName + " " + weather.date);
-    // var iconcode = weather[0].icon;
-    // // var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-    // $('#wicon').attr('src', iconurl);
+    var iconcode = weather.icon;
+    var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+    $('#wicon').attr('src', iconurl);
     $("#temp").text("Temperature: " + weather.temp + " F");
     $("#humidity").text("Humidity: " + weather.humidity + "%");
     $("#wind").text("Wind: " + weather.wind + " MPH");
@@ -111,10 +112,25 @@ function displayUV(UV) {
 }
 
 function displayFiveDay(fiveDayData) {
+    
+    var displayContainer = $(`<div class="col"></div>`)
+    var dayDisplay = $(`<div class="card"></div>`)
+    // var img = $(`<img src="..." class="card-img-top" alt="...">`)
+    var cardbody = $(`<div class="card-body"></div>`)
+    var cardtitle = $(` <h5 class="card-text">${fiveDayData.date}</h5>`)
+    var cardtitle2 = $(` <h5 class="card-text">${fiveDayData.temp}</h5>`)
+    var cardtitle3 = $(` <h5 class="card-text">${fiveDayData.humidity}</h5>`)
+    cardbody.append(cardtitle, cardtitle2, cardtitle3);
+    dayDisplay.append(cardbody);
+    displayContainer.append(dayDisplay);
+    
     //To Do
-    $("#fivedate").text(fiveDayData.date);
-    $("#fivetemp").text("Temp: " + fiveDayData.temp + " F");
-    $("#fivehumidity").text("Humidity: " + fiveDayData.humidity + "%");
+    var forecastDiv = $("<div id=fivedate></div>")
+    // $("<div id=fivedate" + ).text(fiveDayData.date);
+    forecastDiv.text("Temp: " + fiveDayData.temp + " F");
+    $("#appendHere").append(displayContainer);
+
+    // $("#fivehumidity").text("Humidity: " + fiveDayData.humidity + "%");
 }
 function addCity(city) {
     $("<button id=cityButton>" + city + "</button>").appendTo('#cities');
@@ -122,7 +138,18 @@ function addCity(city) {
 
 $("#cities").on("click", "#cityButton", function (event) {
     event.preventDefault();
+    $("#appendHere").empty();
     var buttonValue = $(this).text();
     console.log(buttonValue);
     getWeather(buttonValue);
 })
+
+function saveToStorage(city) {
+    localStorage.setItem("city", JSON.stringify(city))
+}
+
+function getStorage(){
+   var savedCity = JSON.parse(localStorage.getItem("city"))
+    addCity(savedCity);
+}
+getStorage();
