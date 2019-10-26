@@ -145,11 +145,21 @@ $("#cities").on("click", "#cityButton", function (event) {
 })
 
 function saveToStorage(city) {
-    localStorage.setItem("city", JSON.stringify(city))
+    var cityData = {
+        cities: []
+    }
+    var savedCity = JSON.parse(localStorage.getItem("city"))
+    cityData.cities = savedCity.cities;
+    cityData.cities.push(city);
+    localStorage.setItem("city", JSON.stringify(cityData))
+    
 }
 
 function getStorage(){
    var savedCity = JSON.parse(localStorage.getItem("city"))
-    addCity(savedCity);
+   console.log(savedCity);
+   for(i=0; i <savedCity.cities.length; i++){
+   addCity(savedCity.cities[i]);
+   }
 }
 getStorage();
