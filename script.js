@@ -72,12 +72,13 @@ function getFiveDay(city) {
     }).then(function (response) {
         console.log(response);
 
-for (var i = 0; i <5; i++){        
-        var fiveDayData = {
-            date: response.list[i].dt_text,
-            temp: response.list[i].main.temp,
-            humidity: response.list[i].main.humidity,
-        }
+
+        for (var i = 0; i < 5; i++) {
+            var fiveDayData = {
+                date: response.list[i].dt_text,
+                temp: response.list[i].main.temp,
+                humidity: response.list[i].main.humidity,
+            }
         }
         console.log(fiveDayData);
         displayFiveDay(fiveDayData, city);
@@ -102,7 +103,7 @@ function displayWeatherData(weather, cityName) {
     $("#temp").text("Temperature: " + weather.temp + " F");
     $("#humidity").text("Humidity: " + weather.humidity + "%");
     $("#wind").text("Wind: " + weather.wind + " MPH");
-    
+
 
 }
 function displayUV(UV) {
@@ -112,9 +113,16 @@ function displayUV(UV) {
 function displayFiveDay(fiveDayData) {
     //To Do
     $("#fivedate").text(fiveDayData.date);
-    $("#fivetemp").text(fiveDayData.temp);
-    $("#fivehumidity").text(fiveDayData.humidity);
+    $("#fivetemp").text("Temp: " + fiveDayData.temp + " F");
+    $("#fivehumidity").text("Humidity: " + fiveDayData.humidity + "%");
 }
- function addCity(city) {
-    $("<button>" + city + "</button>").appendTo('#cities');
- }
+function addCity(city) {
+    $("<button id=cityButton>" + city + "</button>").appendTo('#cities');
+}
+
+$("#cities").on("click", "#cityButton", function (event) {
+    event.preventDefault();
+    var buttonValue = $(this).text();
+    console.log(buttonValue);
+    getWeather(buttonValue);
+})
