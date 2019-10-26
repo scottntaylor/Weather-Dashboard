@@ -26,7 +26,15 @@ function getWeather(city) {
         console.log(response);
         console.log(response.name);
 
-        displayWeatherData(response, city);
+        var weather = {
+            cityName: response.name,
+            date: moment(new Date()).format("MM/DD/YYYY"),
+            temp: response.main.temp,
+            humidity: response.main.humidity,
+            wind: response.wind.speed
+        };
+
+        displayWeatherData(weather, city);
 
         var lon = response.coord.lon;
         var lat = response.coord.lat;
@@ -46,6 +54,7 @@ function getUV(lon, lat) {
     }).then(function (response) {
         console.log(response[0].value);
         var UV = response[0].value;
+        displayUV(UV);
     })
 }
 
@@ -57,24 +66,20 @@ function getUV(lon, lat) {
 // // }
 // searchCity();
 
-function displayWeatherData(response, cityName) {
-
-    var cityName = response.name;
-    var date = moment(new Date()).format("MM/DD/YYYY");
-    var temp = response.main.temp;
-    var humidity = response.main.humidity;
-    var wind = response.wind.speed;
-
+function displayWeatherData(weather, cityName) {
     // Pull data from API
-    $("#cityndate").text(cityName + " " + date);
-    var iconcode = response.weather[0].icon;
-    var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-    $('#wicon').attr('src', iconurl);
-    $("#temp").text(temp);
-    $("#humidity").text(humidity);
-    $("#wind").text(wind);
+    $("#cityndate").text(weather.cityName + " " + weather.date);
+    // var iconcode = weather[0].icon;
+    // // var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+    // $('#wicon').attr('src', iconurl);
+    $("#temp").text("Temperature: " + weather.temp + " F");
+    $("#humidity").text("Humidity: " + weather.humidity + "%");
+    $("#wind").text("Wind: " + weather.wind + " MPH");
     // $("#UV").text(UV);
 
+}
+function displayUV(UV){
+    $("#UV").text("UV: " + UV);
 }
 
 function fiveDayForecast() {

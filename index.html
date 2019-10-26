@@ -15,37 +15,60 @@
 
 <body>
 
-   
+
 
     <div id="Header" class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-centered">Weather Dashboard</h1>
-             </div>
+        </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-5">
-                    <H4>Search for a City:</H4>
+                <H4>Search for a City:</H4>
                 <form class="form-inline">
-                        <div class="form-group mx-sm-3 mb-2">
-                            <label for="citySearch" class="sr-only">Destination</label>
-                            <input type="text" class="form-control" id="search" placeholder="Enter a City">
-                        </div>
-                        <button class="btn btn-primary mb-2" id="go"><i class="fa fa-search"></i></button>
-                    </form>
-                    <div id="cities"></div>
-                </div>
-       
-            <div class="col-6" id ="display">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="citySearch" class="sr-only">Destination</label>
+                        <input type="text" class="form-control" id="search" placeholder="Enter a City">
+                    </div>
+                    <button class="btn btn-primary mb-2" id="go"><i class="fa fa-search"></i></button>
+                </form>
+                <div id="cities"></div>
+            </div>
+
+            <div class="col-6" id="display">
                 <H1 id="cityndate"></H1>
-                <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
+                <!-- <div id="icon"><img id="wicon" src="" alt="Weather icon"></div> -->
                 <p id="temp"></p>
                 <p id="humidity"></p>
                 <p id="wind"></p>
                 <p id="UV"></p>
-            
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-5">
+
+                </div>
+                <div class="col-1">
+                    Info
+                </div>
+                <div class="col-1">
+                    Info
+                </div>
+                <div class="col-1">
+                    Info
+                </div>
+                <div class="col-1">
+                    Info
+                </div>
+                <div class="col-1">
+                    Info
+                </div>
+
+            </div>
+        </div>
+
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
