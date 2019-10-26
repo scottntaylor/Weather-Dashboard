@@ -61,15 +61,24 @@ function getUV(lon, lat) {
     })
 }
 
-function getFiveDay(city){
+function getFiveDay(city) {
 
     var fiveDayAPI = `${proxy}api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&APPID=${apiKey}`
 
     $.ajax({
-        url:fiveDayAPI,
+        url: fiveDayAPI,
         method: "GET"
-    }).then (function(response){
+    }).then(function (response) {
         console.log(response);
+
+        var fiveDayData = {
+            date: response.list[3].dt_text,
+            temp: response.list[3].main.temp,
+            humidity: response.list[3].main.humidity,
+
+        }
+        console.log(fiveDayData);
+        displayFiveDay(fiveDayData, city);
     })
 
 }
@@ -94,13 +103,15 @@ function displayWeatherData(weather, cityName) {
     // $("#UV").text(UV);
 
 }
-function displayUV(UV){
+function displayUV(UV) {
     $("#UV").text("UV: " + UV);
 }
 
-function fiveDayForecast() {
+function displayFiveDay(fiveDayData) {
     //To Do
-
+    $("#fivedate").text(fiveDayData.date);
+    $("#fivetemp").text(fiveDayData.temp);
+    $("#fivehumidity").text(fiveDayData.humidity);
 }
 // function addCity(response) {
 //     $("#cities").append("<div>" + city + "<div>");
