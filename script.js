@@ -83,6 +83,7 @@ function getFiveDay(city) {
                 date: response.list[i].dt_txt,
                 temp: response.list[i].main.temp,
                 humidity: response.list[i].main.humidity,
+                icon: response.list[i].main.icon,
             }
 
             console.log(fiveDayData);
@@ -99,7 +100,7 @@ function displayWeatherData(weather, cityName) {
     console.log(weather);
     $("#cityndate").text(weather.cityName + " " + weather.date);
     var iconcode = weather.icon;
-    var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+    var iconurl = "https://openweathermap.org/img/w/" + iconcode + ".png";
     $('#wicon').attr('src', iconurl);
     $("#temp").text("Temperature: " + weather.temp + " F");
     $("#humidity").text("Humidity: " + weather.humidity + "%");
@@ -112,14 +113,18 @@ function displayUV(UV) {
 }
 
 function displayFiveDay(fiveDayData) {
+    var fiveDayIconCode = fiveDayData.icon;
+    var fiveDayiconUrl = "https://openweathermap.org/img/w/" + fiveDayIconCode + ".png";
     
     var displayContainer = $(`<div class="col"></div>`)
     var dayDisplay = $(`<div class="card"></div>`)
-    // var img = $(`<img src="..." class="card-img-top" alt="...">`)
+    // var img = $(`<img src="${fiveDayiconUrl}" class="card-img-top" alt="...">`)
+    console.log(img);
     var cardbody = $(`<div class="card-body"></div>`)
     var cardtitle = $(` <h5 class="card-text">${fiveDayData.date}</h5>`)
-    var cardtitle2 = $(` <h5 class="card-text">${fiveDayData.temp}</h5>`)
-    var cardtitle3 = $(` <h5 class="card-text">${fiveDayData.humidity}</h5>`)
+    var cardtitle2 = $(` <h5 class="card-text"> Temp: ${fiveDayData.temp}</h5>`)
+    var cardtitle3 = $(` <h5 class="card-text"> Humidity ${fiveDayData.humidity}</h5>`)
+    // var cardtitle4 = $(` <h5 class="card-text">${fiveDayData.icon}</h5>`)
     cardbody.append(cardtitle, cardtitle2, cardtitle3);
     dayDisplay.append(cardbody);
     displayContainer.append(dayDisplay);
